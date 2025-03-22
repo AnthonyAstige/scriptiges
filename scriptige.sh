@@ -1,11 +1,14 @@
-#!/bin/zsh
+#!/bin/sh
+
+# Get the directory where this script is located
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 COMMAND=$1 # Get the command (first argument)
 
 # List available scripts if no command or help requested
 if [ -z "$COMMAND" ] || [ "$COMMAND" = "help" ]; then
   echo "Available scripts:"
-  for script in scripts/*.sh; do
+  for script in "$SCRIPT_DIR/scripts"/*.sh; do
     script_name=$(basename "$script" .sh)
     echo "  $script_name"
   done
@@ -13,7 +16,7 @@ if [ -z "$COMMAND" ] || [ "$COMMAND" = "help" ]; then
 fi
 
 # Find and execute the requested script
-SCRIPT_PATH="scripts/${COMMAND}.sh"
+SCRIPT_PATH="$SCRIPT_DIR/scripts/${COMMAND}.sh"
 
 if [ -f "$SCRIPT_PATH" ]; then
   sh "$SCRIPT_PATH"
