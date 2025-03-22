@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Package of Scripts Anthony Astige uses in his development and shares between projects",
   "main": "index.js",
+  "bin": {
+    "scriptige": "./scriptige.sh"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
