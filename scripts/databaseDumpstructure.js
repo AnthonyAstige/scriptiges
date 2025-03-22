@@ -9,7 +9,7 @@ config();
 const container = process.env.DOCKER_CONTAINER_POSTGRES_NAME;
 const username = process.env.POSTGRES_USER;
 const database = process.env.POSTGRES_DB;
-const outputFile = "./prisma/AstigeFinance-schema.sql";
+const outputFile = `./prisma/${database}-schema.sql`;
 
 if (!username || !database) {
   throw new Error("Environment variables DB_USERNAME or DB_NAME are not set.");
