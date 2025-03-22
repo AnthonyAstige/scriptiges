@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Package of Scripts Anthony Astige uses in his development and shares between projects",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "scriptige": "./scriptige.sh"
   },
@@ -18,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/AnthonyAstige/scriptiges/issues"
   },
-  "homepage": "https://github.com/AnthonyAstige/scriptiges#readme"
+  "homepage": "https://github.com/AnthonyAstige/scriptiges#readme",
+  "devDependencies": {
+    "dotenv": "^16.4.7"
+  }
 }
