@@ -1,0 +1,19 @@
+{
+  "name": "scriptiges",
+  "version": "0.0.1",
+  "description": "Package of Scripts Anthony Astige uses in his development and shares between projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyAstige/scriptiges.git"
+  },
+  "author": "Anthony Astige",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnthonyAstige/scriptiges/issues"
+  },
+  "homepage": "https://github.com/AnthonyAstige/scriptiges#readme"
+}
