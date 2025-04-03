@@ -16,9 +16,9 @@ if [ ! -x "$KNIP_EXEC" ]; then
   exit 1
 fi
 
-# Execute the specific knip binary directly in the current working directory
-# Pass the --no-gitignore flag
-"$KNIP_EXEC"
+# Execute the specific knip binary directly in the current working directory,
+# explicitly specifying this project's configuration from the script's package root via node_modules
+"$KNIP_EXEC" -c "./node_modules/scriptiges/knip.json"
 
 # Check the exit code of knip
 KNIP_EXIT_CODE=$?
