@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "scriptige.sh" // Main entry point via bin
+    // Add "index.js" or other JS/TS files if they become relevant
+  ],
+  "project": [
+    "**/*.{js,ts,mjs,cjs}" // Files Knip should analyze
+  ]
+}

@@ -20,7 +20,14 @@
     "url": "https://github.com/AnthonyAstige/scriptiges/issues"
   },
   "homepage": "https://github.com/AnthonyAstige/scriptiges#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knip": "knip"
+  },
   "devDependencies": {
-    "dotenv": "^16.4.7"
+    "@types/node": "^20.12.12",
+    "dotenv": "^16.4.7",
+    "knip": "^5.16.0",
+    "typescript": "^5.4.5"
   }
 }
