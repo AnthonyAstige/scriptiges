@@ -15,8 +15,8 @@ shift
 
 # Get the directory where this script is located.
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-# Get the scriptiges project root (two levels up from internal/)
-PACKAGE_ROOT=$(cd "$SCRIPT_DIR/../.." && pwd)
+# Get the scriptiges project root (which is the directory this script is in)
+PACKAGE_ROOT="$SCRIPT_DIR"
 # Construct the path to the executable.
 EXEC_PATH="$PACKAGE_ROOT/node_modules/.bin/$COMMAND_NAME"
 
