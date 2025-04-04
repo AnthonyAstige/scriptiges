@@ -13,10 +13,10 @@ COMMAND_NAME="$1"
 # Shift the arguments so that "$@" now contains only the arguments for the command.
 shift
 
-# Get the directory where this script is located, resolving symlinks.
+# Get the directory where this script is located.
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-# Assume package.json is one level up from the scripts directory.
-PACKAGE_ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
+# Get the scriptiges project root (two levels up from internal/)
+PACKAGE_ROOT=$(cd "$SCRIPT_DIR/../.." && pwd)
 # Construct the path to the executable.
 EXEC_PATH="$PACKAGE_ROOT/node_modules/.bin/$COMMAND_NAME"
 

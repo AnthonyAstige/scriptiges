@@ -8,8 +8,8 @@ COMMAND=$1 # Get the command (first argument)
 # List available scripts if no command or help requested
 if [ -z "$COMMAND" ] || [ "$COMMAND" = "help" ]; then
   echo "Available scripts:"
-  # Find all executable files in scripts directory
-  find "$SCRIPT_DIR/scripts" -type f -perm -u+x | while read -r script; do
+  # Find all executable files in scripts directory (non-recursive)
+  find "$SCRIPT_DIR/scripts" -maxdepth 1 -type f -perm -u+x | while read -r script; do
     script_name=$(basename "$script")
     # Remove any extension for display
     echo "  ${script_name%.*}"
@@ -17,8 +17,8 @@ if [ -z "$COMMAND" ] || [ "$COMMAND" = "help" ]; then
   exit 0
 fi
 
-# Find and execute the requested script (with any extension)
-SCRIPT_PATH=$(find "$SCRIPT_DIR/scripts" -type f -perm -u+x -name "${COMMAND}.*" | head -n 1)
+# Find and execute the requested script (with any extension, non-recursive)
+SCRIPT_PATH=$(find "$SCRIPT_DIR/scripts" -maxdepth 1 -type f -perm -u+x -name "${COMMAND}.*" | head -n 1)
 
 if [ -n "$SCRIPT_PATH" ]; then
   "$SCRIPT_PATH"
