@@ -9,25 +9,25 @@
   "ignoreDependencies": [
     // Standard Unused dependencies
     "jiti",
-    "react-dom",
+    // "react-dom",
     // Standard Unused devDependencies
     "@types/eslint",
-    "@types/react-dom",
+    // "@types/react-dom",
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
     "aiges",
-    "eslint",
+    // "eslint",
     "eslint-config-next",
     "eslint-plugin-astige",
     "postcss",
-    "prisma",
+    // "prisma",
     "scriptiges",
     "tailwindcss"
   ],
   "ignoreBinaries": [
-    "next",
-    "tsc",
-    "prisma",
+    // "next",
+    // "tsc",
+    // "prisma",
     "prettier"
   ]
 }
