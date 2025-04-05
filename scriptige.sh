@@ -21,7 +21,8 @@ fi
 SCRIPT_PATH=$(find "$SCRIPT_DIR/scripts" -maxdepth 1 -type f -perm -u+x -name "${COMMAND}.*" | head -n 1)
 
 if [ -n "$SCRIPT_PATH" ]; then
-  "$SCRIPT_PATH"
+  shift # Remove the command from arguments
+  "$SCRIPT_PATH" "$@"
 else
   echo "Error: Script '${COMMAND}' not found"
   echo "Use 'npx krage help' to list available scripts"
