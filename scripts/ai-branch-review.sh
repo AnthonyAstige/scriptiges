@@ -16,35 +16,41 @@ if ! command -v aider >/dev/null 2>&1; then
   exit 1
 fi
 
-# Get the diff against the target branch
-# Using TARGET_BRANCH...HEAD includes changes on the current branch since it diverged from TARGET_BRANCH
-DIFF_CONTENT=$(git diff "$TARGET_BRANCH"...HEAD)
+# Get list of changed files against target branch
+CHANGED_FILES=$(git diff --name-only "$TARGET_BRANCH"...HEAD)
 DIFF_EXIT_CODE=$?
 
 if [ $DIFF_EXIT_CODE -ne 0 ]; then
-  echo "❌ Failed to generate diff against '$TARGET_BRANCH' branch (git diff exit code: $DIFF_EXIT_CODE)."
-  # Exit non-zero as we couldn't get the diff needed for review.
+  echo "❌ Failed to get changed files against '$TARGET_BRANCH' branch (git diff exit code: $DIFF_EXIT_CODE)."
   exit 1
 fi
 
-# Check if diff is empty
-if [ -z "$DIFF_CONTENT" ]; then
-  echo "✅ No changes detected compared to '$TARGET_BRANCH' branch. Skipping AI review."
+# Check if any files changed
+if [ -z "$CHANGED_FILES" ]; then
+  echo "⚠ No files changed compared to '$TARGET_BRANCH' branch. Skipping AI review."
   exit 0
 fi
 
 echo "Running Aider for review (this may take a moment)..."
+echo "Changed files:"
+echo "$CHANGED_FILES"
 
 # Construct the prompt for Aider
-# Instructs Aider to review the diff from stdin, list top 3 improvements in a table, and explicitly NOT edit files.
-PROMPT="Please review the following git diff provided via standard input. Identify the top 3 most important areas for potential improvement based on code quality, clarity, and best practices. Present your findings concisely in a markdown table format with columns like 'Priority', 'File(s)', and 'Suggestion'. Do *not* propose any code changes, do *not* ask to apply edits, and do *not* modify any files. Just output the review table."
+PROMPT="Please review the following changed files and identify the top 3 most important improvements needed across all files. Focus on:
+1. Critical issues that could cause bugs or failures
+2. Major opportunities to improve code quality/maintainability
+3. Significant performance optimizations
 
-# Pipe the diff content to aider and provide the prompt via --message
-# --no-auto-commits prevents aider from automatically committing any (unintended) changes.
-# We rely heavily on the prompt to prevent edits. Aider's primary function is editing,
-# so this usage is somewhat off-label, but feasible with careful prompting.
-echo "$DIFF_CONTENT" | aider --message "$PROMPT" --no-auto-commits
+Format your response as a concise markdown list with:
+- Priority (High/Medium/Low)
+- Description of the issue
+- Suggested improvement
+- Affected files
 
+Do not make any actual changes to the files. Only list the top 3 most impactful items."
+
+# Pass the changed files to aider for review
+aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits
 AIDER_EXIT_CODE=$?
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
