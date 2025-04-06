@@ -49,5 +49,12 @@ if ! "$SCRIPT_DIR/typecheck.sh"; then
   exit 1
 fi
 
+# Step 4: AI Diff Review (Optional - does not fail audit)
+echo
+echo "Running AI diff review..."
+# We don't check the exit code here, as the script itself reports issues
+# and we decided it shouldn't fail the main audit.
+"$SCRIPT_DIR/ai-branch-review.sh"
+
 echo
 echo "✅ All code audits passed!"
