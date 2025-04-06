@@ -9,10 +9,15 @@ echo "Starting AI diff review..."
 TARGET_BRANCH="main"
 # --- End Configuration ---
 
+# Check for uncommitted changes first
+if ! git diff --quiet; then
+  echo "❌ Working directory is not clean! Commit or stash changes before running branch review."
+  exit 1
+fi
+
 # Check if aider is installed
 if ! command -v aider >/dev/null 2>&1; then
   echo "❌ Aider command not found. Please install Aider (e.g., 'pip install aider-chat') and ensure it's in your PATH."
-  # Exit non-zero because the script cannot perform its function.
   exit 1
 fi
 
@@ -50,6 +55,9 @@ Do not make any actual changes to the files. Only list the top 5 most impactful 
 # Pass the changed files to aider for review using the 'free' model
 aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model free
 AIDER_EXIT_CODE=$?
+
+# Reset any accidental Aider file changes (it doens't like to fully listen sometimes)
+git clean -fd
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
   echo "⚠️ Aider exited with a non-zero exit code ($AIDER_EXIT_CODE). Review its output carefully."
