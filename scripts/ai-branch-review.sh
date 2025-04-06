@@ -56,7 +56,15 @@ if [ $AIDER_EXIT_CODE -ne 0 ]; then
   exit $AIDER_EXIT_CODE
 fi
 
+# Get GitHub remote URL and format it for diff view
+GIT_REMOTE_URL=$(git remote get-url origin | sed -e 's/^git@github.com:/https:\/\/github.com\//' -e 's/\.git$//')
+CURRENT_BRANCH=$(git branch --show-current)
+GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
+
 echo
 echo "💡 Consider these suggestions thoughtfully - implement what makes sense for your context."
+echo
+echo "🔍 You can also review the changes manually at:"
+echo "${GITHUB_DIFF_URL}"
 
 exit 0
