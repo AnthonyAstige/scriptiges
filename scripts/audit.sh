@@ -28,11 +28,15 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 2: Linting (placeholder - you'll need to add a lint.sh script later)
+# Step 2: Linting
 echo
 echo "Running linting..."
-if ! "$SCRIPT_DIR/lint.sh"; then
-  echo "❌ Linting failed! Please fix linting issues before continuing."
+LINT_OUTPUT=$("$SCRIPT_DIR/lint.sh" 2>&1)
+LINT_STATUS=$?
+
+if [ $LINT_STATUS -ne 0 ] || [ -n "$LINT_OUTPUT" ]; then
+  echo "$LINT_OUTPUT"
+  echo "❌ Linting failed! Please fix linting issues (including warnings) before continuing."
   exit 1
 fi
 
