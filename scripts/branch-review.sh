@@ -9,9 +9,11 @@ echo "Starting AI diff review..."
 TARGET_BRANCH="main"
 # --- End Configuration ---
 
-# Check for uncommitted changes first
-if ! git diff --quiet; then
-  echo "❌ Working directory is not clean! Commit or stash changes before running branch review."
+# Strong check for any uncommitted changes (staged, unstaged, or untracked)
+if [ -n "$(git status --porcelain)" ]; then
+  echo "❌ Working directory is not clean! Found:"
+  git status --short
+  echo "Please commit or stash all changes before running branch review."
   exit 1
 fi
 

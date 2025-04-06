@@ -11,9 +11,11 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 # Step 1: Formatting
 echo
 echo "1) Formatting..."
-git diff --quiet --exit-code # Check for existing uncommitted changes
-if [ $? -ne 0 ]; then
-  echo "❌ Working directory is not clean! Commit or stash changes before running audit."
+# Strong check for any uncommitted changes (staged, unstaged, or untracked)
+if [ -n "$(git status --porcelain)" ]; then
+  echo "❌ Working directory is not clean! Found:"
+  git status --short
+  echo "Please commit or stash all changes before running audit."
   exit 1
 fi
 
