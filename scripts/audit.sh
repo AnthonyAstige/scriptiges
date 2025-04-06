@@ -29,6 +29,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Step 2: Linting (placeholder - you'll need to add a lint.sh script later)
+echo
 echo "Running linting..."
 if ! "$SCRIPT_DIR/lint.sh"; then
   echo "❌ Linting failed! Please fix linting issues before continuing."
@@ -36,6 +37,7 @@ if ! "$SCRIPT_DIR/lint.sh"; then
 fi
 
 # Step 3: Testing (placeholder - you'll need to add a test.sh script later)
+echo
 echo "Running tests..."
 if ! "$SCRIPT_DIR/test.sh"; then
   echo "❌ Tests failed! Please fix test failures before continuing."
