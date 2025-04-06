@@ -34,7 +34,7 @@ fi
 
 # Check if any files changed
 if [ -z "$CHANGED_FILES" ]; then
-  echo "⚠ No files changed compared to '$TARGET_BRANCH' branch. Skipping AI review."
+  echo "🐥 No files changed compared to '$TARGET_BRANCH' branch. Skipping AI review."
   exit 0
 fi
 
@@ -59,7 +59,12 @@ aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model branch-review
 AIDER_EXIT_CODE=$?
 
 # Reset any accidental Aider file changes (it doens't like to fully listen sometimes)
-git clean -fd
+if [ -n "$(git status --porcelain)" ]; then
+  echo "🐥 Looks like Aider changed some stuff, Found:"
+  git status --short
+  echo "🐥 Cleaning it all up with \`git reset --hard && git clean -fd\`"
+  git reset --hard && git clean -fd
+fi
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
   echo "⚠️ Aider exited with a non-zero exit code ($AIDER_EXIT_CODE). Review its output carefully."
