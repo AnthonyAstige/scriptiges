@@ -10,7 +10,7 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 # Step 1: Formatting
 echo
-echo "Running code formatting..."
+echo "1) Formatting..."
 git diff --quiet --exit-code # Check for existing uncommitted changes
 if [ $? -ne 0 ]; then
   echo "❌ Working directory is not clean! Commit or stash changes before running audit."
@@ -31,7 +31,7 @@ fi
 
 # Step 2: Linting
 echo
-echo "Running linting..."
+echo "2) Linting..."
 LINT_OUTPUT=$("$SCRIPT_DIR/lint.sh" 2>&1)
 LINT_STATUS=$?
 
@@ -43,7 +43,7 @@ fi
 
 # Step 3: Testing (placeholder - you'll need to add a test.sh script later)
 echo
-echo "Running typecheck..."
+echo "3) Typechecking..."
 if ! "$SCRIPT_DIR/typecheck.sh"; then
   echo "❌ Typecheck failed! Please fix before continuing."
   exit 1
@@ -54,7 +54,7 @@ echo "✅ All strict code analysis audits passed!"
 
 # Step 4: AI Diff Review (Optional - does not fail audit)
 echo
-echo "Running final AI branch review..."
+echo "4) Final Step: AI branch review..."
 # We don't check the exit code here, as the script itself reports issues
 # and we decided it shouldn't fail the main audit.
 "$SCRIPT_DIR/ai-branch-review.sh"

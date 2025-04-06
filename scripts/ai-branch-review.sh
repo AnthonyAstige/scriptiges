@@ -32,8 +32,6 @@ if [ -z "$CHANGED_FILES" ]; then
 fi
 
 echo "Running Aider for review (this may take a moment)..."
-echo "Changed files:"
-echo "$CHANGED_FILES"
 
 # Construct the prompt for Aider
 PROMPT="Please review the following changed files and identify the top 5 most important improvements needed across all files. Focus on:
@@ -57,5 +55,8 @@ if [ $AIDER_EXIT_CODE -ne 0 ]; then
   echo "⚠️ Aider exited with a non-zero exit code ($AIDER_EXIT_CODE). Review its output carefully."
   exit $AIDER_EXIT_CODE
 fi
+
+echo
+echo "💡 Consider these suggestions thoughtfully - implement what makes sense for your context."
 
 exit 0
