@@ -49,8 +49,8 @@ Format your response as a concise markdown list with:
 
 Do not make any actual changes to the files. Only list the top 3 most impactful items."
 
-# Pass the changed files to aider for review
-aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits
+# Pass the changed files to aider for review using the 'free' model
+aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model free
 AIDER_EXIT_CODE=$?
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
