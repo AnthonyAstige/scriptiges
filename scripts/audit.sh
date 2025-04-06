@@ -3,12 +3,13 @@
 # Script to run a series of cleanup steps before branch finalization
 # Exits on first error encountered and reports the failure
 
-echo "Starting auditing..."
+echo "Starting audit..."
 
 # Get the directory where this script is located
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 # Step 1: Formatting
+echo
 echo "Running code formatting..."
 git diff --quiet --exit-code # Check for existing uncommitted changes
 if [ $? -ne 0 ]; then
@@ -42,10 +43,11 @@ fi
 
 # Step 3: Testing (placeholder - you'll need to add a test.sh script later)
 echo
-echo "Running tests..."
-if ! "$SCRIPT_DIR/test.sh"; then
-  echo "❌ Tests failed! Please fix test failures before continuing."
+echo "Running typecheck..."
+if ! "$SCRIPT_DIR/typecheck.sh"; then
+  echo "❌ Typecheck failed! Please fix before continuing."
   exit 1
 fi
 
-echo "✅ All branch cleanup steps completed successfully!"
+echo
+echo "✅ All code audits passed!"
