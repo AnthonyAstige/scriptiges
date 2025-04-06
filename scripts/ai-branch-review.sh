@@ -36,9 +36,9 @@ echo "Changed files:"
 echo "$CHANGED_FILES"
 
 # Construct the prompt for Aider
-PROMPT="Please review the following changed files and identify the top 3 most important improvements needed across all files. Focus on:
-1. Critical issues that could cause bugs or failures
-2. Major opportunities to improve code quality/maintainability
+PROMPT="Please review the following changed files and identify the top 5 most important improvements needed across all files. Focus on:
+1. Major opportunities to improve code quality/maintainability
+2. Critical issues that could cause bugs or failures
 3. Significant performance optimizations
 
 Format your response as a concise markdown list with:
@@ -47,7 +47,7 @@ Format your response as a concise markdown list with:
 - Suggested improvement
 - Affected files
 
-Do not make any actual changes to the files. Only list the top 3 most impactful items."
+Do not make any actual changes to the files. Only list the top 5 most impactful items."
 
 # Pass the changed files to aider for review using the 'free' model
 aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model free
