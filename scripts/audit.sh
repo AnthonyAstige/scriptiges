@@ -3,7 +3,7 @@
 # Script to run a series of cleanup steps before branch finalization
 # Exits on first error encountered and reports the failure
 
-echo "Starting branch cleanup process..."
+echo "Starting auditing..."
 
 # Get the directory where this script is located
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
