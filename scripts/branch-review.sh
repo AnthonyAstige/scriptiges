@@ -62,9 +62,8 @@ CURRENT_BRANCH=$(git branch --show-current)
 GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
 
 echo
-echo "💡 Consider these suggestions thoughtfully - implement what makes sense for your context."
-echo
-echo "🔍 You can also review the changes manually at:"
-echo "${GITHUB_DIFF_URL}"
+echo "1) Implement AI suggestions where they sense contextual. Re-run for new suggestions until satisfied."
+echo "2) Review branch manually at: ${GITHUB_DIFF_URL}"
+echo "3) Rebase branch onto origin main via \`npx s rebase\`"
 
 exit 0

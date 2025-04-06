@@ -54,7 +54,7 @@ echo "✅ All strict code analysis audits passed!"
 
 # Step 4: AI Diff Review (Optional - does not fail audit)
 echo
-echo "4) Final Step: AI branch review..."
+echo "4) Final Step: Branch review..."
 # We don't check the exit code here, as the script itself reports issues
 # and we decided it shouldn't fail the main audit.
-"$SCRIPT_DIR/ai-branch-review.sh"
+"$SCRIPT_DIR/branch-review.sh"
