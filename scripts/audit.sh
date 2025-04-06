@@ -5,6 +5,9 @@
 
 echo "Starting branch cleanup process..."
 
+# Get the directory where this script is located
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
 # Step 1: Formatting
 echo "Running code formatting..."
 git diff --quiet --exit-code # Check for existing uncommitted changes
@@ -13,7 +16,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-./format.sh
+"$SCRIPT_DIR/format.sh"
 if [ $? -ne 0 ]; then
   echo "❌ Formatting failed! Please fix formatting issues before continuing."
   exit 1
@@ -27,14 +30,14 @@ fi
 
 # Step 2: Linting (placeholder - you'll need to add a lint.sh script later)
 echo "Running linting..."
-if ! ./lint.sh; then
+if ! "$SCRIPT_DIR/lint.sh"; then
   echo "❌ Linting failed! Please fix linting issues before continuing."
   exit 1
 fi
 
 # Step 3: Testing (placeholder - you'll need to add a test.sh script later)
 echo "Running tests..."
-if ! ./test.sh; then
+if ! "$SCRIPT_DIR/test.sh"; then
   echo "❌ Tests failed! Please fix test failures before continuing."
   exit 1
 fi
