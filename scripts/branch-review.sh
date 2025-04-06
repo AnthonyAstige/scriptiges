@@ -76,9 +76,9 @@ GIT_REMOTE_URL=$(git remote get-url origin | sed -e 's/^git@github.com:/https:\/
 CURRENT_BRANCH=$(git branch --show-current)
 GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
 
-echo
-echo "1) Implement AI suggestions where they sense contextual. Re-run for new suggestions until satisfied."
-echo "2) Review branch manually at: ${GITHUB_DIFF_URL}"
-echo "3) Rebase branch onto origin main via \`npx s rebase\`"
+echo "👀 Review Steps 👀"
+echo "1) Implement above AI suggestions that make sense, re-run if needed"
+echo "2) Review: ${GITHUB_DIFF_URL}"
+echo "3) Rebase with: npx s rebase"
 
 exit 0
