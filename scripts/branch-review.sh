@@ -55,7 +55,7 @@ Format your response as a concise markdown list with:
 Do not make any actual changes to the files. Only list the top 5 most impactful items."
 
 # Pass the changed files to aider for review using the 'free' model
-aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model free
+aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model branch-review
 AIDER_EXIT_CODE=$?
 
 # Reset any accidental Aider file changes (it doens't like to fully listen sometimes)
