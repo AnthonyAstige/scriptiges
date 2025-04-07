@@ -76,6 +76,7 @@ GIT_REMOTE_URL=$(git remote get-url origin | sed -e 's/^git@github.com:/https:\/
 CURRENT_BRANCH=$(git branch --show-current)
 GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
 
+echo
 echo "👀 Review Steps 👀"
 echo "1) Implement above AI suggestions that make sense, re-run if needed"
 echo "2) Review: ${GITHUB_DIFF_URL}"
