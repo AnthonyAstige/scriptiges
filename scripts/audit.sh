@@ -67,6 +67,10 @@ if ! "$SCRIPT_DIR/typecheck.sh"; then
   exit 1
 fi
 
+# TODO: Add unit tests in the source repository via jest at this step
+# TODO: * Unsure if to run jest from this repo or the host ... probably the host and use it's `npm run test` command ; just in case there are custom setups there
+# TODO: * Add a `npx s test` command (test.sh) script that runs jest tests from the given repository's installation of jest to support this
+
 echo
 echo "🎉 All strict code analysis audits passed!"
 
