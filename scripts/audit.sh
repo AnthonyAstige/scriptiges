@@ -43,9 +43,17 @@ if [ $LINT_STATUS -ne 0 ] || [ -n "$LINT_OUTPUT" ]; then
   exit 1
 fi
 
-# Step 3: Testing (placeholder - you'll need to add a test.sh script later)
+# Step 3: Knip (unused exports, etc)
 echo
-echo "3) Typechecking..."
+echo "3) Knip analysis..."
+if ! "$SCRIPT_DIR/knip.sh"; then
+  echo "❌ Knip found issues! Please fix before continuing."
+  exit 1
+fi
+
+# Step 4: Typechecking
+echo
+echo "4) Typechecking..."
 if ! "$SCRIPT_DIR/typecheck.sh"; then
   echo "❌ Typecheck failed! Please fix before continuing."
   exit 1
@@ -54,9 +62,9 @@ fi
 echo
 echo "✅ All strict code analysis audits passed!"
 
-# Step 4: AI Diff Review (Optional - does not fail audit)
+# Step 5: AI Diff Review (Optional - does not fail audit)
 echo
-echo "4) Final Step: Branch review..."
+echo "5) Final Step: Branch review..."
 # We don't check the exit code here, as the script itself reports issues
 # and we decided it shouldn't fail the main audit.
 "$SCRIPT_DIR/branch-review.sh"
