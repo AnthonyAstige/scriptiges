@@ -51,9 +51,17 @@ if ! "$SCRIPT_DIR/knip.sh"; then
   exit 1
 fi
 
-# Step 4: Typechecking
+# Step 4: Circular Dependencies
 echo
-echo "4) Typechecking..."
+echo "4) Circular Dependency Check..."
+if ! "$SCRIPT_DIR/circular-deps.sh"; then
+  echo "❌ Circular dependencies found! Please fix before continuing."
+  exit 1
+fi
+
+# Step 5: Typechecking
+echo
+echo "5) Typechecking..."
 if ! "$SCRIPT_DIR/typecheck.sh"; then
   echo "❌ Typecheck failed! Please fix before continuing."
   exit 1
@@ -62,9 +70,9 @@ fi
 echo
 echo "✅ All strict code analysis audits passed!"
 
-# Step 5: AI Diff Review (Optional - does not fail audit)
+# Step 6: AI Diff Review (Optional - does not fail audit)
 echo
-echo "5) Final Step: Branch review..."
+echo "6) Final Step: Branch review..."
 # We don't check the exit code here, as the script itself reports issues
 # and we decided it shouldn't fail the main audit.
 "$SCRIPT_DIR/branch-review.sh"
