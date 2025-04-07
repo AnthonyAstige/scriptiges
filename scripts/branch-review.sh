@@ -79,6 +79,6 @@ GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
 echo "👀 Review Steps 👀"
 echo "1) Implement above AI suggestions that make sense, re-run if needed"
 echo "2) Review: ${GITHUB_DIFF_URL}"
-echo "3) Rebase with: npx s rebase"
+echo "3) Rebase to replay your commits on latest $TARGET_BRANCH with: npx s replay"
 
 exit 0
