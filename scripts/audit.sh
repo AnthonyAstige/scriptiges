@@ -68,7 +68,7 @@ if ! "$SCRIPT_DIR/typecheck.sh"; then
 fi
 
 echo
-echo "✅ All strict code analysis audits passed!"
+echo "🎉 All strict code analysis audits passed!"
 
 # Step 6: AI Diff Review (Optional - does not fail audit)
 echo
