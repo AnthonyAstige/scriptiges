@@ -67,16 +67,20 @@ if ! "$SCRIPT_DIR/typecheck.sh"; then
   exit 1
 fi
 
-# TODO: Add unit tests in the source repository via jest at this step
-# TODO: * Unsure if to run jest from this repo or the host ... probably the host and use it's `npm run test` command ; just in case there are custom setups there
-# TODO: * Add a `npx s test` command (test.sh) script that runs jest tests from the given repository's installation of jest to support this
+# Step 6: Unit Tests
+echo
+echo "6) Running Tests..."
+if ! "$SCRIPT_DIR/test.sh"; then
+  echo "❌ Tests failed! Please fix test failures before continuing."
+  exit 1
+fi
 
 echo
 echo "🎉 All strict code analysis audits passed!"
 
-# Step 6: AI Diff Review (Optional - does not fail audit)
+# Step 7: AI Diff Review (Optional - does not fail audit)
 echo
-echo "6) Final Step: Branch review..."
+echo "7) Final Step: Branch review..."
 # We don't check the exit code here, as the script itself reports issues
 # and we decided it shouldn't fail the main audit.
 "$SCRIPT_DIR/branch-review.sh"
