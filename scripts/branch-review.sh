@@ -52,19 +52,11 @@ Format your response as a concise markdown list with:
 - Suggested improvement
 - Affected files
 
-Do not make any actual changes to the files. Only list the top 5 most impactful items."
+Only list the top 5 most impactful items."
 
-# Pass the changed files to aider for review using the 'free' model
-aider --message "$PROMPT" $CHANGED_FILES --no-auto-commits --model branch-review
+# Pass the changed files to aider for review using the 'free' model in chat mode
+aider --message "$PROMPT" --chat-mode ask $CHANGED_FILES --model branch-review
 AIDER_EXIT_CODE=$?
-
-# Reset any accidental Aider file changes (it doens't like to fully listen sometimes)
-if [ -n "$(git status --porcelain)" ]; then
-  echo "🐥 Looks like Aider changed some stuff, Found:"
-  git status --short
-  echo "🐥 Cleaning it all up with \`git reset --hard && git clean -fd\`"
-  git reset --hard && git clean -fd
-fi
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
   echo "⚠️ Aider exited with a non-zero exit code ($AIDER_EXIT_CODE). Review its output carefully."
