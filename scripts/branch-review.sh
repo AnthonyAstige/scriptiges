@@ -34,7 +34,7 @@ fi
 
 # Check if any files changed
 if [ -z "$CHANGED_FILES" ]; then
-  echo "🐥 No files changed compared to '$TARGET_BRANCH' branch. Skipping AI review."
+  echo "🐥 No files changed compared to '$TARGET_BRANCH' branch. Skipping branch review."
   exit 0
 fi
 
