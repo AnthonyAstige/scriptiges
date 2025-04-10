@@ -52,8 +52,8 @@ echo "The following commits will be replayed:"
 git --no-pager log --oneline --graph "$TARGET_BRANCH".."$CURRENT_BRANCH"
 
 echo
-echo "Starting rebase onto $TARGET_BRANCH..."
-if ! git rebase "$TARGET_BRANCH"; then
+echo "Starting rebase..."
+if ! (git checkout "$TARGET_BRANCH" && git rebase "$CURRENT_BRANCH" && git checkout "$CURRENT_BRANCH"); then
   echo
   echo "❌ Rebase encountered conflicts. Please:"
   echo "1. Resolve the conflicts marked in files"
