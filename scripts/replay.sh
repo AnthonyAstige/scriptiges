@@ -62,15 +62,16 @@ if ! git rebase "$TARGET_BRANCH"; then
   exit 1
 fi
 
-echo
-echo "Pushing rebased $CURRENT_BRANCH to origin (force-with-lease)..."
-git push origin "$CURRENT_BRANCH" --force-with-lease
-if [ $? -ne 0 ]; then
-  echo "❌ Push failed! Please resolve any issues and try again."
-  echo "   Common issues include the remote branch having new commits."
-  echo "   You might need to run 'git fetch origin' and replay again."
-  exit 1
-fi
+# TODO: Add back and test this pushing
+# echo
+# echo "Pushing rebased $TARGET_BRANCH to origin (force-with-lease)..."
+# git push origin "$TARGET_BRANCH" --force-with-lease
+# if [ $? -ne 0 ]; then
+#   echo "❌ Push failed! Please resolve any issues and try again."
+#   echo "   Common issues include the remote branch having new commits."
+#   echo "   You might need to run 'git fetch origin' and replay again."
+#   exit 1
+# fi
 
 echo
 echo "✅ Successfully replayed $CURRENT_BRANCH onto latest $TARGET_BRANCH and pushed"
