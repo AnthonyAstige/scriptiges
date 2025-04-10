@@ -2,10 +2,14 @@
 
 # Script to rebase current branch onto latest main branch
 # This is a safer alternative to `git rebase main` that:
-# 1. Ensures working directory is clean
-# 2. Fetches latest changes
-# 3. Shows what will be rebased
-# 4. Provides clear instructions if conflicts occur
+# 1. Runs a code audit
+# 2. Ensures working directory is clean
+# 3. Fetches latest changes
+# 4. Shows what will be rebased
+# 5. Provides clear instructions if conflicts occur
+
+# Get the directory where this script is located
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 echo "Starting branch replay..."
 
@@ -13,6 +17,15 @@ echo "Starting branch replay..."
 # You can change the target branch here if needed (e.g., 'master', 'develop')
 TARGET_BRANCH="main"
 # --- End Configuration ---
+
+# Run audit
+echo
+echo "Running audit (minus branch review)..."
+$SCRIPT_DIR/audit.sh --skip-branch-review
+if [ $? -ne 0 ]; then
+  echo "❌ Audit failed before replay. Please fix the issues and try again."
+  exit 1
+fi
 
 # Strong check for any uncommitted changes
 if [ -n "$(git status --porcelain)" ]; then

@@ -8,6 +8,21 @@ echo "Starting audit..."
 # Get the directory where this script is located
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
+# Parse command-line arguments
+SKIP_BRANCH_REVIEW=false
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+  --skip-branch-review)
+    SKIP_BRANCH_REVIEW=true
+    shift
+    ;;
+  *)
+    echo "Unknown argument: $1"
+    exit 1
+    ;;
+  esac
+done
+
 # Step 1: Formatting
 echo
 echo "1) Formatting..."
@@ -78,9 +93,13 @@ fi
 echo
 echo "🎉 All strict code analysis audits passed!"
 
-# Step 7: AI Diff Review (Optional - does not fail audit)
+# Step 7: AI Diff Review (Optional)
 echo
-echo "7) Final Step: Branch review..."
-# We don't check the exit code here, as the script itself reports issues
-# and we decided it shouldn't fail the main audit.
-"$SCRIPT_DIR/branch-review.sh"
+if [ "$SKIP_BRANCH_REVIEW" = true ]; then
+  echo "7) Branch review: skipped due to --skip-branch-review option."
+else
+  echo "7) Branch review..."
+  # We don't check the exit code here, as the script itself reports issues
+  # and we decided it shouldn't fail the main audit.
+  "$SCRIPT_DIR/branch-review.sh"
+fi
