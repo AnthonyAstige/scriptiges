@@ -63,5 +63,12 @@ if ! git rebase "$TARGET_BRANCH"; then
 fi
 
 echo
-echo "✅ Successfully replayed $CURRENT_BRANCH onto latest $TARGET_BRANCH!"
-echo "You may need to force push with: git push --force-with-lease"
+echo "Pushing changes to origin..."
+git push origin "$TARGET_BRANCH"
+if [ $? -ne 0 ]; then
+  echo "❌ Push failed! Please resolve any issues and try again."
+  exit 1
+fi
+
+echo
+echo "✅ Successfully replayed $CURRENT_BRANCH onto latest $TARGET_BRANCH and pushed"
