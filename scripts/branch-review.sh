@@ -23,8 +23,8 @@ if ! command -v aider >/dev/null 2>&1; then
   exit 1
 fi
 
-# Get list of changed files against target branch
-CHANGED_FILES=$(git diff --name-only "$TARGET_BRANCH"...HEAD)
+# Get list of changed files against target branch, but not deleted files
+CHANGED_FILES=$(git diff --diff-filter=ACMR --name-only "$TARGET_BRANCH"...HEAD)
 DIFF_EXIT_CODE=$?
 
 if [ $DIFF_EXIT_CODE -ne 0 ]; then
