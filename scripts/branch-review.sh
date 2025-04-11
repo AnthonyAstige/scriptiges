@@ -54,7 +54,6 @@ Format your response as a concise markdown list with:
 
 Only list the top 5 most impactful items."
 
-# Pass the changed files to aider for review using the 'free' model in chat mode
 aider --message "$PROMPT" --chat-mode ask $CHANGED_FILES --model branch-review --map-tokens 0
 AIDER_EXIT_CODE=$?
 
