@@ -1,4 +1,26 @@
 services:
+  postgres:
+    container_name: ${DOCKER_CONTAINER_POSTGRES_NAME}
+    build:
+      context: .
+      dockerfile: docker/postgres/dockerfile
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./.data/docker/postgres:/var/lib/postgresql/data
+    networks:
+      - postgres_database_backup_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: on-failure:5
+
   backuppostgres:
     container_name: ${DOCKER_CONTAINER_FULLDBDUMPER_NAME}
     build:
@@ -17,6 +39,8 @@ services:
     volumes:
       - ./docker/fulldbdumper/scripts:/scripts
       - ./.data/postgres_dumps:/backups
+    networks:
+      - postgres_database_backup_network
     healthcheck:
       test:
         [
@@ -28,6 +52,11 @@ services:
       retries: 5
     restart: on-failure:5
     # TODO: Make this work ... maybe I need to move the main postgres docker container into scriptages from astige-finance
-    # depends_on:
-#       postgres:
-#         condition: service_healthy
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+networks:
+  postgres_database_backup_network:
+    external: true
+    # driver: bridge
