@@ -63,4 +63,4 @@ if [ -z "${POSTGRES_PASSWORD}" ]; then
   exit 1
 fi
 
-docker-compose -f "${PROJECT_ROOT}/docker-compose.yml" run --rm backuppostgres once
+docker-compose -f "${SCRIPT_DIR}/../docker-compose.yml" run --rm backuppostgres once
