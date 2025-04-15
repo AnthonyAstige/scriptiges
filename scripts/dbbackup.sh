@@ -16,6 +16,9 @@ find_project_root() {
 # Find the project root directory, starting from the current working directory
 PROJECT_ROOT=$(find_project_root "$(pwd)")
 
+# Get the directory of the script
+SCRIPT_DIR=$(dirname "$0")
+
 # Define the backup directory relative to the project root
 BACKUP_DIR="${PROJECT_ROOT}/.data/postgres_dumps"
 
