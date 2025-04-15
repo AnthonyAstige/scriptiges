@@ -1,0 +1,32 @@
+services:
+  backuppostgres:
+    container_name: ${DOCKER_CONTAINER_FULLDBDUMPER_NAME}
+    build:
+      context: .
+      dockerfile: docker/fulldbdumper/dockerfile
+      args:
+        APPLICATION_TZ: ${APPLICATION_TZ}
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_BACKUP_INTERVAL: ${POSTGRES_BACKUP_INTERVAL}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    entrypoint: ["/bin/sh", "/scripts/entrypoint.sh"]
+    volumes:
+      - ./docker/fulldbdumper/scripts:/scripts
+      - ./.data/postgres_dumps:/backups
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -h postgres -p ${POSTGRES_PORT} -U ${POSTGRES_USER}",
+        ]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+    restart: on-failure:5
+    depends_on:
+      postgres:
+        condition: service_healthy
