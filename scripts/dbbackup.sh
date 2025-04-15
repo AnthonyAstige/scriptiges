@@ -15,11 +15,14 @@ find_project_root() {
 
 # Find the project root directory, starting from the current working directory
 PROJECT_ROOT=$(find_project_root "$(pwd)")
-echo "PROOT: $PROJECT_ROOT"
 
 # Define the backup directory relative to the project root
 BACKUP_DIR="${PROJECT_ROOT}/.data/postgres_dumps"
-echo "BACKUP_DIR: $BACKUP_DIR"
+
+# Load environment variables from .env file, if it exists in the project root
+if [ -f "${PROJECT_ROOT}/.env" ]; then
+  source "${PROJECT_ROOT}/.env"
+fi
 
 # Check if the backup directory exists, and create it if it doesn't
 if [ ! -d "${BACKUP_DIR}" ]; then
@@ -51,10 +54,10 @@ if [ -z "${POSTGRES_DB}" ]; then
   echo "Error: POSTGRES_DB is not set"
   exit 1
 fi
-if [ -z "${POSTGRES_BACKUP_INTERVAL}" ]; then
-  echo "Error: POSTGRES_BACKUP_INTERVAL is not set"
-  exit 1
-fi
+# if [ -z "${POSTGRES_BACKUP_INTERVAL}" ]; then
+#   echo "Error: POSTGRES_BACKUP_INTERVAL is not set"
+#   exit 1
+# fi
 if [ -z "${POSTGRES_PASSWORD}" ]; then
   echo "Error: POSTGRES_PASSWORD is not set"
   exit 1
