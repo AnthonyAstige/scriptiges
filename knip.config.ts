@@ -1,6 +1,8 @@
 const base = {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  entry: [],
+  entry: [
+    'scripts/*.ts',
+  ],
   "project": [
     "**/*.{js,jsx,ts,tsx,mjs,cjs}" // Files Knip should analyze
   ],
