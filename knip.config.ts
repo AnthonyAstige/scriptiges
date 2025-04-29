@@ -1,5 +1,6 @@
-{
+const base = {
   "$schema": "https://unpkg.com/knip@5/schema.json",
+  entry: [],
   "project": [
     "**/*.{js,jsx,ts,tsx,mjs,cjs}" // Files Knip should analyze
   ],
@@ -30,4 +31,5 @@
     // "prisma",
     "prettier"
   ]
-}
+} as const;
+export default base;
