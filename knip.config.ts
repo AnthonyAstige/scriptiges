@@ -31,5 +31,5 @@ const base = {
     // "prisma",
     "prettier"
   ]
-} as const;
+} ;
 export default base;
