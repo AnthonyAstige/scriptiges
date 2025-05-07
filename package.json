@@ -1,6 +1,6 @@
 {
   "name": "scriptiges",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Package of Scripts Anthony Astige uses in his development and shares between projects",
   "main": "index.js",
   "type": "module",
@@ -24,11 +24,11 @@
   "homepage": "https://github.com/AnthonyAstige/scriptiges#readme",
   "dependencies": {
     "knip": "^5.16.0"
+    "dpdm": "^3.14.0",
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
     "dotenv": "^16.4.7",
-    "dpdm": "^3.14.0",
     "eslint-interactive": "^11.1.0",
     "typescript": "^5.4.5"
   }
