@@ -22,12 +22,14 @@
     "url": "https://github.com/AnthonyAstige/scriptiges/issues"
   },
   "homepage": "https://github.com/AnthonyAstige/scriptiges#readme",
+  "dependencies": {
+    "knip": "^5.16.0"
+  },
   "devDependencies": {
     "@types/node": "^20.12.12",
     "dotenv": "^16.4.7",
     "dpdm": "^3.14.0",
     "eslint-interactive": "^11.1.0",
-    "knip": "^5.16.0",
     "typescript": "^5.4.5"
   }
 }
