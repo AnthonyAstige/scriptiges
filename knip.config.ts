@@ -21,10 +21,8 @@ const base = {
     "aiges",
     // "eslint",
     "eslint-config-next",
-    "eslint-plugin-astige",
     "postcss",
     // "prisma",
-    "scriptiges",
     "tailwindcss"
   ],
   "ignoreBinaries": [
