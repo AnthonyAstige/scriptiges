@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/AnthonyAstige/scriptiges#readme",
   "dependencies": {
-    "knip": "^5.16.0"
     "dpdm": "^3.14.0",
+    "knip": "^5.16.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
