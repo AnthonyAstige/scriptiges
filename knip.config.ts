@@ -23,7 +23,8 @@ const base = {
     "eslint-config-next",
     "postcss",
     // "prisma",
-    "tailwindcss"
+    "tailwindcss",
+    "tw-animate-css" // Imported in css so knip will always false positive
   ],
   "ignoreBinaries": [
     // "next",
