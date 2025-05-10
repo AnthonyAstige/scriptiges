@@ -113,6 +113,10 @@ while true; do
     echo
     echo "**EXITING**"
     echo "No issues found."
+    if [ "$WARNING_COUNT" -ne 0 ]; then
+      echo
+      echo "Try running with --include-warnings to also fix warnings."
+    fi
     exit 0
   fi
 
