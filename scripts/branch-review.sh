@@ -40,6 +40,14 @@ fi
 
 echo "Running Aider for review (this may take a moment)..."
 
+# Get GitHub remote URL and format it for diff view
+GIT_REMOTE_URL=$(git remote get-url origin | sed -e 's/^git@github.com:/https:\/\/github.com\//' -e 's/\.git$//')
+CURRENT_BRANCH=$(git branch --show-current)
+GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
+
+echo " - If you don't want to wait you can review the diff at: ${GITHUB_DIFF_URL}"
+echo
+
 # Construct the prompt for Aider
 PROMPT="Please review the following changed files and identify the top 5 most important improvements needed across all files. Focus on:
 1. Major opportunities to improve code quality/maintainability
@@ -64,11 +72,6 @@ if [ $AIDER_EXIT_CODE -ne 0 ]; then
   echo "⚠️ Aider exited with a non-zero exit code ($AIDER_EXIT_CODE). Review its output carefully."
   exit $AIDER_EXIT_CODE
 fi
-
-# Get GitHub remote URL and format it for diff view
-GIT_REMOTE_URL=$(git remote get-url origin | sed -e 's/^git@github.com:/https:\/\/github.com\//' -e 's/\.git$//')
-CURRENT_BRANCH=$(git branch --show-current)
-GITHUB_DIFF_URL="${GIT_REMOTE_URL}/compare/${TARGET_BRANCH}...${CURRENT_BRANCH}"
 
 echo
 echo "👀 Review Steps 👀"
