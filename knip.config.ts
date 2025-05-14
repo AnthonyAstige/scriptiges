@@ -24,7 +24,8 @@ const base = {
     "postcss",
     // "prisma",
     "tailwindcss",
-    "tw-animate-css" // Imported in css so knip will always false positive
+    "tw-animate-css", // Imported in css so knip will always false positive
+    "server-only" // https://github.com/vercel/next.js/issues/71071
   ],
   "ignoreBinaries": [
     // "next",
