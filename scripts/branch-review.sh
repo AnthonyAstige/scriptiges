@@ -65,10 +65,8 @@ Only list the top 5 most impactful items."
 # TODO: Start passing branch again when issue resolved
 # * https://github.com/Aider-AI/aider/issues/3897
 # aider --message "$PROMPT" --chat-mode ask "$CHANGED_FILES" --model branch-review --map-tokens 0
-# Process CHANGED_FILES to escape special characters for aider
-# This handles spaces, parentheses, and other special characters by escaping them.
-ESCAPED_CHANGED_FILES=$(echo "$CHANGED_FILES" | xargs printf "%q ")
-aider --message "$PROMPT" --chat-mode ask $ESCAPED_CHANGED_FILES --map-tokens 0
+# Pass CHANGED_FILES to aider using xargs to handle spaces and special characters
+echo "$CHANGED_FILES" | xargs aider --message "$PROMPT" --chat-mode ask --map-tokens 0
 AIDER_EXIT_CODE=$?
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
