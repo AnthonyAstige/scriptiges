@@ -65,7 +65,7 @@ Only list the top 5 most impactful items."
 # TODO: Start passing branch again when issue resolved
 # * https://github.com/Aider-AI/aider/issues/3897
 # aider --message "$PROMPT" --chat-mode ask "$CHANGED_FILES" --model branch-review --map-tokens 0
-# Pass CHANGED_FILES to aider using xargs to handle spaces and special characters
+# Pass CHANGED_FILES to aider using xargs to handle spaces and special characters (not sure if it's really needed, as went down this path to solve an unrelated issue, but it works)
 echo "$CHANGED_FILES" | xargs aider --message "$PROMPT" --chat-mode ask --map-tokens 0
 AIDER_EXIT_CODE=$?
 
