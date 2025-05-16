@@ -64,8 +64,8 @@ Only list the top 5 most impactful items."
 
 # TODO: Start passing branch again when issue resolved
 # * https://github.com/Aider-AI/aider/issues/3897
-# aider --message "$PROMPT" --chat-mode ask $CHANGED_FILES --model branch-review --map-tokens 0
-aider --message "$PROMPT" --chat-mode ask $CHANGED_FILES --map-tokens 0
+# aider --message "$PROMPT" --chat-mode ask "$CHANGED_FILES" --model branch-review --map-tokens 0
+aider --message "$PROMPT" --chat-mode ask "$CHANGED_FILES" --map-tokens 0
 AIDER_EXIT_CODE=$?
 
 if [ $AIDER_EXIT_CODE -ne 0 ]; then
