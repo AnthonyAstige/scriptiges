@@ -23,6 +23,14 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
+# Step 0: File Case Matching
+echo
+echo "0) Checking file case matches Git..."
+if ! "$SCRIPT_DIR/fileCaseMatchesGit.sh"; then
+  echo "❌ File case mismatches found! Please run the suggested git mv commands to fix."
+  exit 1
+fi
+
 # Step 1: Formatting
 echo
 echo "1) Formatting..."
