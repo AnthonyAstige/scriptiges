@@ -1,6 +1,6 @@
 {
   "name": "scriptiges",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Package of Scripts Anthony Astige uses in his development and shares between projects",
   "main": "index.js",
   "type": "module",

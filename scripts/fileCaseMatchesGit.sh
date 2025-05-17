@@ -4,6 +4,7 @@
 # Outputs git mv commands to fix mismatches.
 
 exit_status=0
+first_mismatch_found=0 # Flag to track if the introductory message has been printed
 
 git ls-files | while read -r git_path; do
   # Get the directory and base name from the git path
@@ -46,6 +47,16 @@ git ls-files | while read -r git_path; do
   if [ "$normalized_actual_path" != "$git_path" ]; then
     # Output the git mv command to correct the case.
     # Use the original git_path and the actual_path found by find.
+
+    # If this is the first mismatch found, print the introductory message
+    if [ "$first_mismatch_found" -eq 0 ]; then
+      echo "Found file case mismatches between Git index and the filesystem."
+      echo "Git is case-sensitive, but your filesystem might not be, which can cause issues."
+      echo "The following 'git mv' commands will correct the case in your Git index:"
+      echo "" # Add a blank line for readability
+      first_mismatch_found=1 # Set the flag so the message isn't printed again
+    fi
+
     echo "git mv \"$git_path\" \"$actual_path\""
   fi
 done
