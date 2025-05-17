@@ -19,17 +19,19 @@ git ls-files | while read -r git_path; do
   # Count the number of results
   num_actual_paths=$(echo "$actual_paths" | grep -c '^')
 
-  # If no case-insensitive match is found, the file might not exist on the FS,
-  # or find failed. We just skip this file as it's not a case mismatch issue.
   if [ "$num_actual_paths" -eq 0 ]; then
-      continue
+    # This might happen if the file or its directory doesn't exist on the FS at all,
+    # or if find fails for some reason.
+    echo "Error: Could not find case-insensitive match for '$git_path' in directory '$dir'."
+    exit_status=1
+    continue
   elif [ "$num_actual_paths" -gt 1 ]; then
-      # Multiple case-insensitive matches in the same directory is unexpected but possible
-      # with unusual filenames or filesystems. Cannot automatically fix.
-      echo "Warning: Found multiple case-insensitive matches for '$git_path' in directory '$dir':"
-      echo "$actual_paths"
-      exit_status=1
-      continue
+    # Multiple case-insensitive matches in the same directory is unexpected but possible
+    # with unusual filenames or filesystems. Cannot automatically fix.
+    echo "Warning: Found multiple case-insensitive matches for '$git_path' in directory '$dir':"
+    echo "$actual_paths"
+    exit_status=1
+    continue
   fi
 
   # We found exactly one match. This is the actual case-sensitive path on the filesystem.
@@ -45,8 +47,6 @@ git ls-files | while read -r git_path; do
     # Output the git mv command to correct the case.
     # Use the original git_path and the actual_path found by find.
     echo "git mv \"$git_path\" \"$actual_path\""
-    # Set exit status to indicate a mismatch was found
-    exit_status=1
   fi
 done
 
