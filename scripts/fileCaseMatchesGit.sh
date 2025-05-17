@@ -1,17 +1,47 @@
 #!/usr/bin/env bash
 
 # Check for file case mismatches between Git index and the filesystem
-git ls-files | while read -r file; do
-  # Check if the file exists on the filesystem
-  [ ! -e "$file" ] && echo "Missing: $file" && continue
+# Outputs git mv commands to fix mismatches.
 
-  # Find the actual file path on the filesystem, respecting case
-  # Use find with -maxdepth 1 to only search in the immediate directory
-  # Use -print0 and xargs -0 to handle filenames with spaces or special characters
-  actual=$(find "$(dirname "$file")" -maxdepth 1 -name "$(basename "$file")" -print0 | xargs -0)
+git ls-files | while read -r git_path; do
+  # Get the directory and base name from the git path
+  dir=$(dirname "$git_path")
+  base=$(basename "$git_path")
 
-  # Compare the Git path with the actual filesystem path
-  if [ "$actual" != "$file" ]; then
-    echo "Case mismatch: Git: $file  → FS: $actual"
+  # Find the actual file path on the filesystem, respecting case, using case-insensitive search.
+  # Use find with -maxdepth 1 to only search in the immediate directory.
+  # Use -print and read to handle filenames. Assumes no newlines in filenames.
+  # This approach is more robust than relying on xargs -0 for simple cases.
+  actual_paths=$(find "$dir" -maxdepth 1 -iname "$base" -print)
+
+  # Count the number of results
+  num_actual_paths=$(echo "$actual_paths" | grep -c '^')
+
+  if [ "$num_actual_paths" -eq 0 ]; then
+      # This might happen if the file or its directory doesn't exist on the FS at all,
+      # or if find fails for some reason.
+      echo "Error: Could not find case-insensitive match for '$git_path' in directory '$dir'."
+      continue
+  elif [ "$num_actual_paths" -gt 1 ]; then
+      # Multiple case-insensitive matches in the same directory is unexpected but possible
+      # with unusual filenames or filesystems. Cannot automatically fix.
+      echo "Warning: Found multiple case-insensitive matches for '$git_path' in directory '$dir':"
+      echo "$actual_paths"
+      continue
+  fi
+
+  # We found exactly one match. This is the actual case-sensitive path on the filesystem.
+  actual_path="$actual_paths"
+
+  # Normalize actual_path by removing leading ./ if it exists, for comparison purposes.
+  # git ls-files paths are relative to the repo root without a leading ./.
+  normalized_actual_path=$(echo "$actual_path" | sed 's/^\.\///')
+
+  # Compare the Git path with the actual filesystem path (normalized for comparison).
+  # If they differ, it's a case mismatch.
+  if [ "$normalized_actual_path" != "$git_path" ]; then
+    # Output the git mv command to correct the case.
+    # Use the original git_path and the actual_path found by find.
+    echo "git mv \"$git_path\" \"$actual_path\""
   fi
 done
