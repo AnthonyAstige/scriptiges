@@ -58,6 +58,7 @@ git ls-files | while read -r git_path; do
     fi
 
     echo "git mv \"$git_path\" \"$actual_path\""
+    exit_status=1 # Set exit status to indicate a mismatch was found
   fi
 done
 
