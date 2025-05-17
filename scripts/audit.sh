@@ -23,17 +23,9 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-# Step 0: File Case Matching
+# Step 0: Formatting
 echo
-echo "0) Checking file case matches Git..."
-if ! "$SCRIPT_DIR/fileCaseMatchesGit.sh"; then
-  echo "❌ File case mismatches found! Please run the suggested git mv commands to fix."
-  exit 1
-fi
-
-# Step 1: Formatting
-echo
-echo "1) Formatting..."
+echo "0) Formatting..."
 # Strong check for any uncommitted changes (staged, unstaged, or untracked)
 if [ -n "$(git status --porcelain)" ]; then
   echo "❌ Working directory is not clean! Found:"
@@ -51,6 +43,14 @@ fi
 git diff --quiet --exit-code
 if [ $? -ne 0 ]; then
   echo "❌ Formatting introduced changes! Please review and commit formatting changes before continuing."
+  exit 1
+fi
+
+# Step 1: File Case Matching
+echo
+echo "1) Checking file case matches Git..."
+if ! "$SCRIPT_DIR/fileCaseMatchesGit.sh"; then
+  echo "❌ File case mismatches found! Please run the suggested git mv commands to fix."
   exit 1
 fi
 
