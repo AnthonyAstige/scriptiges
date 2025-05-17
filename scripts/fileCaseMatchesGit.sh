@@ -6,7 +6,9 @@
 exit_status=0
 first_mismatch_found=0 # Flag to track if the introductory message has been printed
 
-git ls-files | while read -r git_path; do
+# Use process substitution to run the while loop in the main shell,
+# allowing us to set variables in the main script environment.
+while read -r git_path; do
   # Get the directory and base name from the git path
   dir=$(dirname "$git_path")
   base=$(basename "$git_path")
@@ -58,8 +60,8 @@ git ls-files | while read -r git_path; do
     fi
 
     echo "git mv \"$git_path\" \"$actual_path\""
-    exit_status=1 # Set exit status to indicate a mismatch was found
+    exit_status=1 # Set exit status to indicate a mismatch was found in the main script
   fi
-done
+done < <(git ls-files) # Feed git ls-files output using process substitution
 
-exit $exit_status
+exit $exit_status # Exit with the collected status
