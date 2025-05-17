@@ -23,9 +23,9 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-# Step 0: Formatting
+# Step 1: Formatting
 echo
-echo "0) Formatting..."
+echo "1) Formatting..."
 # Strong check for any uncommitted changes (staged, unstaged, or untracked)
 if [ -n "$(git status --porcelain)" ]; then
   echo "❌ Working directory is not clean! Found:"
@@ -46,17 +46,17 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 1: File Case Matching
+# Step 2: File Case Matching
 echo
-echo "1) Checking file case matches Git..."
+echo "2) Checking file case matches Git..."
 if ! "$SCRIPT_DIR/fileCaseMatchesGit.sh"; then
   echo "❌ File case mismatches found! Please run the suggested git mv commands to fix."
   exit 1
 fi
 
-# Step 2: Linting
+# Step 3: Linting
 echo
-echo "2) Linting..."
+echo "3) Linting..."
 LINT_OUTPUT=$("$SCRIPT_DIR/lint.sh" 2>&1)
 LINT_STATUS=$?
 
@@ -66,33 +66,33 @@ if [ $LINT_STATUS -ne 0 ] || [ -n "$LINT_OUTPUT" ]; then
   exit 1
 fi
 
-# Step 3: Knip (unused exports, etc)
+# Step 4: Knip (unused exports, etc)
 echo
-echo "3) Knip analysis..."
+echo "4) Knip analysis..."
 if ! "$SCRIPT_DIR/knip.sh"; then
   echo "❌ Knip found issues! Please fix before continuing."
   exit 1
 fi
 
-# Step 4: Circular Dependencies
+# Step 5: Circular Dependencies
 echo
-echo "4) Circular Dependency Check..."
+echo "5) Circular Dependency Check..."
 if ! "$SCRIPT_DIR/circular-deps.sh"; then
   echo "❌ Circular dependencies found! Please fix before continuing."
   exit 1
 fi
 
-# Step 5: Typechecking
+# Step 6: Typechecking
 echo
-echo "5) Typechecking..."
+echo "6) Typechecking..."
 if ! "$SCRIPT_DIR/typecheck.sh"; then
   echo "❌ Typecheck failed! Please fix before continuing."
   exit 1
 fi
 
-# Step 6: Unit Tests
+# Step 7: Unit Tests
 echo
-echo "6) Running Tests..."
+echo "7) Running Tests..."
 if ! "$SCRIPT_DIR/test.sh"; then
   echo "❌ Tests failed! Please fix test failures before continuing."
   exit 1
@@ -101,12 +101,12 @@ fi
 echo
 echo "🎉 All strict code analysis audits passed!"
 
-# Step 7: AI Diff Review (Optional)
+# Step 8: AI Diff Review (Optional)
 echo
 if [ "$SKIP_BRANCH_REVIEW" = true ]; then
   echo "7) Branch review: skipped due to --skip-branch-review option."
 else
-  echo "7) Branch review..."
+  echo "8) Branch review..."
   # We don't check the exit code here, as the script itself reports issues
   # and we decided it shouldn't fail the main audit.
   "$SCRIPT_DIR/branch-review.sh"
