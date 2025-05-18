@@ -11,6 +11,7 @@ const base = {
   ],
   "ignoreDependencies": [
     // Standard Unused dependencies
+    "dotenv",
     "jiti",
     // "react-dom",
     // Standard Unused devDependencies
