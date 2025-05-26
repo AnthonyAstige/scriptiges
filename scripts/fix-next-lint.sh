@@ -1,9 +1,25 @@
 #!/bin/bash
 
+# Function to print the help message
+print_help() {
+  echo "Usage: fix-lint-aider-next <aider|vim> [options] [model]"
+  echo
+  echo "Options:"
+  echo "  --help               Show this help message and exit"
+  echo "  --loop               Continue fixing lint issues until all are resolved"
+  echo "  --ruleId RULE_ID     Only fix issues matching the specified ESLint rule ID"
+  echo "  --include-warnings   Include warnings in addition to errors (default: errors only)"
+  echo "  --model MODEL        Specify the model to use with aider (default: default)"
+  echo
+  echo "Arguments:"
+  echo "  model                Optional model name to use with aider (see ~/.aider.conf.yml for aliases)"
+}
+
 # Validate first argument
 if [[ $# -eq 0 ]]; then
   echo "Error: Missing required action parameter"
-  echo "Usage: fix-lint-aider-next <aider|vim> [options] [model]"
+  echo
+  print_help
   exit 1
 fi
 
@@ -52,17 +68,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ "$HELP_MODE" = true ]; then
-  echo "Usage: fix-lint-aider-next <aider|vim> [options] [model]"
-  echo
-  echo "Options:"
-  echo "  --help               Show this help message and exit"
-  echo "  --loop               Continue fixing lint issues until all are resolved"
-  echo "  --ruleId RULE_ID     Only fix issues matching the specified ESLint rule ID"
-  echo "  --include-warnings   Include warnings in addition to errors (default: errors only)"
-  echo "  --model MODEL        Specify the model to use with aider (default: default)"
-  echo
-  echo "Arguments:"
-  echo "  model                Optional model name to use with aider (see ~/.aider.conf.yml for aliases)"
+  print_help
   exit 0
 fi
 
