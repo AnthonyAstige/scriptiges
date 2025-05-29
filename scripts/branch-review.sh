@@ -54,13 +54,23 @@ PROMPT="Please review the following changed files and identify the top 5 most im
 2. Critical issues that could cause bugs or failures
 3. Significant performance optimizations
 
-Format your response as a concise markdown list with:
-- Priority (High/Medium/Low)
-- Description of the issue
-- Suggested improvement
-- Affected files
+Provide a concise list of the top 5 items. For each item, include:
+- A brief description of the issue
+- A concise suggestion for improvement
+- The affected file(s)
 
-Only list the top 5 most impactful items."
+Use a simple text format. Provide line breaks between each.
+
+Example Output:
+**Function X is too complex**
+Suggestion: Break down into smaller functions
+Files: file1.py, file2.js
+
+**Missing error handling**
+Suggestion: Add try-except block
+Files: service.py
+
+..."
 
 # TODO: Start passing branch again when issue resolved
 # * https://github.com/Aider-AI/aider/issues/3897
