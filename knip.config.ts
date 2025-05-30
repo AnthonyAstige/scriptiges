@@ -22,7 +22,6 @@ const base = {
     "aiges",
     // "eslint",
     "eslint-config-next",
-    "postcss",
     // "prisma",
     "tailwindcss",
     "tw-animate-css", // Imported in css so knip will always false positive
