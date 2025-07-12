@@ -12,7 +12,7 @@ const database = process.env.POSTGRES_DB;
 const outputFile = `./prisma/${database}-schema.sql`;
 
 if (!username || !database) {
-  throw new Error("Environment variables DB_USERNAME or DB_NAME are not set.");
+  throw new Error("Environment variables POSTGRES_USER or POSTGRES_DB are not set.");
 }
 
 const command = `docker exec ${container} pg_dump --username=${username} -s ${database} > ${outputFile}`;
