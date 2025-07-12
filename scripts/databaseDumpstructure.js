@@ -15,6 +15,10 @@ if (!username || !database) {
   throw new Error("Environment variables POSTGRES_USER or POSTGRES_DB are not set.");
 }
 
+if(!container) {
+  throw new Error("Environment variables DOCKER_CONTAINER_POSTGRES_NAME is not set.");
+}
+
 const command = `docker exec ${container} pg_dump --username=${username} -s ${database} > ${outputFile}`;
 
 await new Promise((resolve, reject) => {
